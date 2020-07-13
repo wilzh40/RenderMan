@@ -29,6 +29,31 @@
     <FILE id="PqgGm9" name="source.cpp" compile="1" resource="0" file="Source/source.cpp"/>
   </MAINGROUP>
   <EXPORTFORMATS>
+    <XCODE_MAC targetFolder="Builds/OSX" extraCompilerFlags="-fPIC -Wno-macro-redefined"
+                extraLinkerFlags="-shared -lpython3.5m -lboost_python-py35" cppLanguageStandard="-std=c++11">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="renderman"
+                       headerPath="/usr/include/python3.5m"/>
+        <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="renderman"
+		       osxSDK="10.10 SDK" osxCompatibility="10.10 SDK" osxArchitecture="64BitIntel"
+                       headerPath="/usr/include/python3.5m"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="./assets/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="./assets/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="./assets/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="./assets/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="./assets/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="./assets/JUCE/modules"/>
+        <MODULEPATH id="juce_cryptography" path="./assets/JUCE/modules"/>
+        <MODULEPATH id="juce_video" path="./assets/JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="./assets/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="./assets/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="./assets/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="./assets/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="./assets/JUCE/modules"/>
+      </MODULEPATHS>
+    </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/Linux" extraCompilerFlags="-fPIC"
                 extraLinkerFlags="-shared -lpython3.5m -lboost_python-py35" cppLanguageStandard="-std=c++11">
       <CONFIGURATIONS>
