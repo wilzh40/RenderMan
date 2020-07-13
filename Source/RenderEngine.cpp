@@ -38,7 +38,7 @@ bool RenderEngine::loadPlugin (const std::string& path)
     plugin = pluginFormatManager.createPluginInstance (*pluginDescriptions[0],
                                                        sampleRate,
                                                        bufferSize,
-                                                       errorMessage);
+                                                       errorMessage).get();
     if (plugin != nullptr)
     {
         // Success so set up plugin, then set up features and get all available
