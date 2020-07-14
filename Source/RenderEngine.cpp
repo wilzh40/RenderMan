@@ -16,15 +16,19 @@ bool RenderEngine::loadPlugin (const std::string& path)
     OwnedArray<PluginDescription> pluginDescriptions;
     KnownPluginList pluginList;
     AudioPluginFormatManager pluginFormatManager;
+    // Loads to the singleton to keep the library happy.
+    MessageManager::getInstance();
 
     pluginFormatManager.addDefaultFormats();
 
     for (int i = pluginFormatManager.getNumFormats(); --i >= 0;)
     {
-        pluginList.scanAndAddFile (String (path),
+        bool found = pluginList.scanAndAddFile (String (path),
                                    true,
                                    pluginDescriptions,
                                    *pluginFormatManager.getFormat(i));
+	jassert(found);
+
     }
 
     // If there is a problem here first check the preprocessor definitions
@@ -34,15 +38,16 @@ bool RenderEngine::loadPlugin (const std::string& path)
     String errorMessage;
 
     if (plugin != nullptr) delete plugin;
-
     plugin = pluginFormatManager.createPluginInstance (*pluginDescriptions[0],
                                                        sampleRate,
                                                        bufferSize,
-                                                       errorMessage).get();
+                                                       errorMessage).release();
+
     if (plugin != nullptr)
     {
-        // Success so set up plugin, then set up features and get all available
-        // parameters from this given plugin.
+	
+	std::cout << plugin->getName();
+
         plugin->prepareToPlay (sampleRate, bufferSize);
         plugin->setNonRealtime (true);
 

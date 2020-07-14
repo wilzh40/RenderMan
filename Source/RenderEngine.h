@@ -44,9 +44,10 @@ public:
     {
         if (plugin != nullptr)
         {
-            plugin->releaseResources();
-            delete plugin;
+		plugin->releaseResources();
+		delete plugin;
         }
+	MessageManager::deleteInstance();
     }
 
 
