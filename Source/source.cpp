@@ -161,12 +161,30 @@ namespace wrap
     };
 }
 
+//==========================================================================
+class PatchGeneratorWrapper : public PatchGenerator
+{
+  public:
+    PatchGeneratorWrapper (RenderEngine& engine) :
+      PatchGenerator (engine)
+  { }
+
+    boost::python::tuple wrapperGetRandomParameter (int index)
+    {
+      return wrap::parameterToTuple (PatchGenerator::getRandomParameter (index));
+    }
+
+    boost::python::list wrapperGetRandomPatch()
+    {
+      return wrap::pluginPatchToListOfTuples (PatchGenerator::getRandomPatch());
+    }
+};
 //==============================================================================
 BOOST_PYTHON_MODULE(librenderman)
 {
-    using namespace boost::python;
+  using namespace boost::python;
     using namespace wrap;
-
+    
     class_<RenderEngineWrapper>("RenderEngine", init<int, int>())
     .def("hello", &RenderEngineWrapper::hello)
     .def("n_midi_events", &RenderEngineWrapper::nMidiEvents)
@@ -190,5 +208,4 @@ BOOST_PYTHON_MODULE(librenderman)
     class_<PatchGeneratorWrapper>("PatchGenerator", init<RenderEngineWrapper&>())
     .def("get_random_parameter", &PatchGeneratorWrapper::wrapperGetRandomParameter)
     .def("get_random_patch", &PatchGeneratorWrapper::wrapperGetRandomPatch);
-}
 }
