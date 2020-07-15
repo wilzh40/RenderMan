@@ -15,8 +15,10 @@ bool RenderEngine::loadPreset (const std::string& path)
     MemoryBlock mb;
     File file = File(path);
     file.loadFileAsData(mb);
-    bool loaded = VSTPluginFormat::loadFromFXBFile (plugin, mb.getData(), mb.getSize());
-    return loaded;
+    // bool loaded = VSTPluginFormat::loadFromFXBFile (plugin, mb.getData(), mb.getSize());
+    // TODO: Figure out why VSTPluginFormat is not imported.
+    return false;
+// #return loaded;
 }
 
 //==============================================================================

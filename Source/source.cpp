@@ -186,4 +186,9 @@ BOOST_PYTHON_MODULE(librenderman)
     .def("get_audio_frames", &RenderEngineWrapper::wrapperGetAudioFrames)
     .def("get_rms_frames", &RenderEngineWrapper::wrapperGetRMSFrames)
     .def("write_to_wav", &RenderEngineWrapper::writeToWav);
+
+    class_<PatchGeneratorWrapper>("PatchGenerator", init<RenderEngineWrapper&>())
+    .def("get_random_parameter", &PatchGeneratorWrapper::wrapperGetRandomParameter)
+    .def("get_random_patch", &PatchGeneratorWrapper::wrapperGetRandomPatch);
+}
 }
