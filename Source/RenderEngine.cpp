@@ -27,7 +27,7 @@ bool RenderEngine::loadPlugin (const std::string& path)
                                    true,
                                    pluginDescriptions,
                                    *pluginFormatManager.getFormat(i));
-	jassert(found);
+        jassert(found);
 
     }
 
@@ -46,7 +46,8 @@ bool RenderEngine::loadPlugin (const std::string& path)
     if (plugin != nullptr)
     {
 	
-	std::cout << plugin->getName();
+        std::cout << plugin->getName();
+        plugin->enableAllBuses();
 
         plugin->prepareToPlay (sampleRate, bufferSize);
         plugin->setNonRealtime (true);
@@ -325,7 +326,23 @@ void RenderEngine::fillAvailablePluginParameters (PluginPatch& params)
 //==============================================================================
 const String RenderEngine::getPluginParametersDescription()
 {
-    String parameterListString ("");
+    String parameterListString ("index,name,category,defaultValue \n");
+    std::ostringstream ss;
+    int index = 0;
+    for (const AudioProcessorParameter* parameter : plugin->getParameters()) {
+      parameterListString = parameterListString + 
+        String(index) + "," +
+        parameter->getName(50).toStdString() + "," + 
+        String(parameter->getCategory()) + ",";
+      for(const auto & s : parameter->getAllValueStrings()) {
+        parameterListString = parameterListString
+          + s.toStdString() + ";";
+      }
+      parameterListString = parameterListString + "\n";
+      index++;
+    }
+    return parameterListString;
+
 
     if (plugin != nullptr)
     {
